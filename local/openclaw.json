@@ -1,0 +1,16 @@
+{
+  "agent": {
+    "model": "anthropic/claude-sonnet-4-6",
+    "name": "claw-poc"
+  },
+  "gateway": {
+    "port": 18789,
+    "bind": "127.0.0.1"
+  },
+  "providers": {
+    "anthropic": {
+      "type": "api",
+      "apiKey": "YOUR_ANTHROPIC_API_KEY"
+    }
+  }
+}
