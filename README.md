@@ -47,8 +47,7 @@ Self-hosted OpenClaw AI Agent on AWS EC2 with Terraform. Full IaaS approach — 
 
 ```bash
 # 1. Clone and configure
-cd openclaw-poc
-cp terraform.tfvars.example terraform.tfvars
+cd _openclaw-poc
 
 # 2. Edit terraform.tfvars — fill in your IP and generate a gateway token
 #    Find your IP:
