@@ -243,6 +243,7 @@ resource "aws_instance" "openclaw" {
   vpc_security_group_ids = [aws_security_group.openclaw.id]
   iam_instance_profile   = aws_iam_instance_profile.openclaw.name
   key_name               = aws_key_pair.openclaw.key_name
+  monitoring             = true
 
   root_block_device {
     volume_type           = "gp3"
