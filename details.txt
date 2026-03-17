@@ -1,6 +1,4 @@
-Let me set up a clean Terraform project for you.
-
-Here’s your complete OpenClaw POC project, Noel. Clean IaaS from scratch — no dependencies on any existing platform.
+Clean IaaS from scratch — no dependencies on any existing platform.
 What’s in the project:
 	∙	main.tf — Dedicated VPC, public subnet, IGW, security group locked to your IP, IAM role with Bedrock invoke permissions, EC2 instance with IMDSv2 enforced, and an auto-generated ED25519 SSH key pair
 	∙	bootstrap.sh — User data script that installs Node.js 22, pnpm, OpenClaw via the official installer, writes the agent config pointing to Bedrock, creates a systemd service, adds 2GB swap, and drops a post-install verification script
