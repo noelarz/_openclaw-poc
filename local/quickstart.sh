@@ -8,7 +8,7 @@ set -euo pipefail
 echo "========== OpenClaw Local Setup =========="
 
 # 1. Check Node.js >= 22
-NODE_VERSION=$(node -v 2>/dev/null | sed 's/v//' | cut -d. -f1 || echo "0")
+NODE_VERSION=$(node -v 2>/dev/null | tr -d 'v' | cut -d. -f1 || echo "0")
 if [ "$NODE_VERSION" -lt 22 ]; then
   echo "ERROR: Node.js 22+ required. Install via: brew install node@22"
   exit 1
@@ -18,7 +18,7 @@ echo "✓ Node.js $(node -v)"
 # 2. Install OpenClaw
 if ! command -v openclaw &>/dev/null; then
   echo ">>> Installing OpenClaw..."
-  curl -fsSL https://openclaw.ai/install.sh | bash
+  npm install -g openclaw
 else
   echo "✓ OpenClaw already installed: $(openclaw --version 2>/dev/null)"
 fi

@@ -1,16 +1,23 @@
 {
-  "agent": {
-    "model": "anthropic/claude-sonnet-4-6",
-    "name": "claw-poc"
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "amazon-bedrock/anthropic.claude-sonnet-4-6"
+      }
+    }
   },
   "gateway": {
     "port": 18789,
-    "bind": "127.0.0.1"
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token"
+    }
   },
   "providers": {
     "anthropic": {
-      "type": "api",
-      "apiKey": "YOUR_ANTHROPIC_API_KEY"
+      "type": "bedrock",
+      "region": "us-east-1"
     }
   }
 }
