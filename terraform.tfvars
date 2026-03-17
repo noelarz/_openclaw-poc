@@ -1,0 +1,28 @@
+##############################################################################
+# terraform.tfvars — OpenClaw POC
+# Copy this to terraform.tfvars and fill in your values
+##############################################################################
+
+aws_region   = "us-east-1"
+project_name = "openclaw-poc"
+owner_tag    = "noel"
+
+# IMPORTANT: Replace with YOUR public IP. Find it: curl -s ifconfig.me
+allowed_cidrs = ["YOUR_PUBLIC_IP/32"]
+
+# EC2 sizing — t3.medium (2 vCPU, 4 GB) is the minimum recommended
+instance_type       = "t3.medium"
+root_volume_size_gb = 30
+
+# SSM Session Manager (recommended — gives you shell without SSH keys)
+enable_ssm = true
+
+# OpenClaw agent model — Bedrock-available models
+# Options: "anthropic/claude-sonnet-4-6", "anthropic/claude-haiku-4-5"
+openclaw_model = "anthropic/claude-sonnet-4-6"
+
+# Gateway auth token — generate with: openssl rand -hex 32
+gateway_token = "REPLACE_ME_WITH_STRONG_TOKEN"
+
+# Node.js version
+node_major_version = 22

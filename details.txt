@@ -1,0 +1,15 @@
+Let me set up a clean Terraform project for you.
+
+Here’s your complete OpenClaw POC project, Noel. Clean IaaS from scratch — no dependencies on any existing platform.
+What’s in the project:
+	∙	main.tf — Dedicated VPC, public subnet, IGW, security group locked to your IP, IAM role with Bedrock invoke permissions, EC2 instance with IMDSv2 enforced, and an auto-generated ED25519 SSH key pair
+	∙	bootstrap.sh — User data script that installs Node.js 22, pnpm, OpenClaw via the official installer, writes the agent config pointing to Bedrock, creates a systemd service, adds 2GB swap, and drops a post-install verification script
+	∙	variables.tf / outputs.tf — Parameterized for quick iteration; outputs give you SSH commands, tunnel commands, SSM session commands, and the dashboard URL
+To deploy:
+	1.	Copy terraform.tfvars.example → terraform.tfvars
+	2.	Drop in your public IP (curl -s ifconfig.me) and generate a gateway token (openssl rand -hex 32)
+	3.	Make sure Claude Sonnet is enabled in Bedrock model access for your region
+	4.	terraform init && terraform apply
+	5.	SSH tunnel in and hit http://127.0.0.1:18789
+The bootstrap takes about 3-5 minutes after the instance launches. You can tail /var/log/openclaw-bootstrap.log to watch it complete, then run the verification script to confirm everything’s healthy. Let me know if you want to add Tailscale for persistent remote access or wire up a specific channel integration like Telegram or Slack.
+
