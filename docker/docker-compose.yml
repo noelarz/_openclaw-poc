@@ -1,0 +1,34 @@
+services:
+  openclaw:
+    build: .
+    container_name: openclaw-agent
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18789:18789"
+    environment:
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - OPENCLAW_MODEL=${OPENCLAW_MODEL:-amazon-bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    volumes:
+      - openclaw-data:/home/openclaw/.openclaw
+      - browser-data:/home/openclaw/.config/chromium
+      - ${HOST_WORKSPACE:-./workspace}:/home/openclaw/workspace
+    shm_size: '2gb'
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+          cpus: '2'
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:18789/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  openclaw-data:
+  browser-data:
