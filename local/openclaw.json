@@ -13,11 +13,5 @@
     "auth": {
       "mode": "token"
     }
-  },
-  "providers": {
-    "anthropic": {
-      "type": "bedrock",
-      "region": "us-east-1"
-    }
   }
 }
