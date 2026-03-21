@@ -1,0 +1,37 @@
+##############################################################################
+# terraform.tfvars — NemoClaw POC
+# Copy to terraform.tfvars and fill in your values
+##############################################################################
+
+aws_region   = "us-east-1"
+project_name = "nemoclaw-poc"
+owner_tag    = "noel"
+
+# IMPORTANT: Replace with YOUR public IP. Find it: curl -s ifconfig.me
+allowed_cidrs = ["YOUR_PUBLIC_IP/32"]
+
+# EC2 sizing — t3.large (2 vCPU, 8 GB) is the NemoClaw minimum
+# Use t3.xlarge (4 vCPU, 16 GB) for better performance
+instance_type       = "t3.large"
+root_volume_size_gb = 40
+
+# SSM Session Manager (recommended for enterprise — no SSH key management)
+enable_ssm = true
+
+# NVIDIA API key — get a free 90-day key at https://build.nvidia.com
+# Key format: nvapi-xxxxxxxxxxxxxxxxxxxx
+nvidia_api_key = "nvapi-REPLACE_ME"
+
+# Sandbox configuration
+sandbox_name = "healthcare-agent"
+
+# Network policy presets to enable during onboard (comma-separated)
+# Options: discord, dockerhub, huggingface, jira, npm, pypi, slack
+# Leave empty for deny-all (recommended for healthcare — use custom policy)
+network_policy_preset = ""
+
+# VPC flow log retention (days) for compliance audit trail
+flow_log_retention_days = 90
+
+# Node.js version
+node_major_version = 22

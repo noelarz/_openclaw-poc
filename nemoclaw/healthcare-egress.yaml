@@ -1,0 +1,112 @@
+###############################################################################
+# NemoClaw Network Egress Policy — Healthcare POC
+#
+# Principle: deny-all by default, whitelist only approved endpoints.
+# This file is a TEMPLATE — customize for your specific environment.
+#
+# Hot-reloadable: changes apply without restarting the sandbox.
+# Apply with: nemoclaw <sandbox> policy apply --file healthcare-egress.yaml
+###############################################################################
+
+# -- Approved external endpoints -----------------------------------------
+allow:
+  # NVIDIA inference API (required for Nemotron model)
+  - host: "api.nvcf.nvidia.com"
+    ports: [443]
+    reason: "NVIDIA cloud inference endpoint"
+
+  - host: "integrate.api.nvidia.com"
+    ports: [443]
+    reason: "NVIDIA model integration API"
+
+  # AWS services (Bedrock, CloudWatch — future model provider swap)
+  - host: "bedrock-runtime.us-east-1.amazonaws.com"
+    ports: [443]
+    reason: "AWS Bedrock inference (future provider option)"
+
+  - host: "logs.us-east-1.amazonaws.com"
+    ports: [443]
+    reason: "CloudWatch Logs for audit trail"
+
+  # ---------- CUSTOMIZE: Add your internal endpoints below ----------
+
+  # Example: Epic FHIR API gateway
+  # - host: "fhir.epic.yourorg.com"
+  #   ports: [443]
+  #   reason: "Epic FHIR R4 API for patient data queries"
+
+  # Example: Internal API gateway / service mesh
+  # - host: "api.internal.yourorg.com"
+  #   ports: [443]
+  #   reason: "Internal API mesh for approved microservices"
+
+  # Example: SFTP for data exchange
+  # - host: "sftp.yourorg.com"
+  #   ports: [22]
+  #   reason: "Secure file transfer for batch data exchange"
+
+  # -------------------------------------------------------------------
+
+  # Package registries (for skill installation — REMOVE in production)
+  - host: "registry.npmjs.org"
+    ports: [443]
+    reason: "npm package installs for skills [REMOVE IN PROD]"
+
+  - host: "pypi.org"
+    ports: [443]
+    reason: "Python package installs [REMOVE IN PROD]"
+
+  # DNS
+  - host: "dns"
+    ports: [53]
+    reason: "DNS resolution"
+
+# -- Explicitly blocked (documentation / auditability) -------------------
+deny:
+  # No direct internet browsing from sandbox
+  - host: "*"
+    ports: [80, 8080]
+    reason: "Block unencrypted HTTP traffic"
+
+  # No social media / messaging from agent (prevent data exfiltration)
+  - host: "*.slack.com"
+    reason: "Block agent-initiated Slack (use channel integration instead)"
+
+  - host: "*.telegram.org"
+    reason: "Block agent-initiated Telegram"
+
+  # No direct LLM provider access (must go through OpenShell gateway)
+  - host: "api.anthropic.com"
+    reason: "Block direct Anthropic API (enforce gateway routing)"
+
+  - host: "api.openai.com"
+    reason: "Block direct OpenAI API (enforce gateway routing)"
+
+  # No public cloud storage (prevent PHI exfiltration)
+  - host: "*.s3.amazonaws.com"
+    reason: "Block direct S3 access (use approved internal buckets only)"
+
+  - host: "storage.googleapis.com"
+    reason: "Block GCS access"
+
+  - host: "*.blob.core.windows.net"
+    reason: "Block Azure Blob access"
+
+# -- Policy metadata -----------------------------------------------------
+metadata:
+  name: "healthcare-poc-egress"
+  version: "1.0.0"
+  author: "noel"
+  compliance_notes: |
+    This policy enforces network isolation for a healthcare POC environment.
+    All outbound connections are denied by default except explicitly whitelisted
+    endpoints above. Customize the allow list based on your specific EHR/EMR
+    integrations, approved SaaS endpoints, and internal API gateways.
+
+    For HIPAA-aligned deployments:
+    - Add your EHR API gateway (e.g., Epic FHIR, Cerner)
+    - Add your internal API mesh / service mesh endpoints
+    - Remove npm/pypi once all skills are pre-installed
+    - Add CloudTrail and audit log endpoints
+    - Consider adding VPN/PrivateLink endpoints for zero-trust networking
+    - Ensure PHI never leaves the VPC except through approved channels
