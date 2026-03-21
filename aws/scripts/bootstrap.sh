@@ -15,7 +15,7 @@ echo "========== OpenClaw Bootstrap Started: $(date -u) =========="
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update -y
+apt-get update -y || apt-get update -y --allow-releaseinfo-change || true
 apt-get upgrade -y
 apt-get install -y \
   build-essential \
