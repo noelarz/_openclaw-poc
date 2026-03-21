@@ -69,14 +69,16 @@ These constraints are **out-of-process** — they exist in the environment, not 
 ```bash
 # 1. Configure
 cd nemoclaw
+
+# 2. Create your local config from the example (gitignored — never committed)
 cp terraform.tfvars.example terraform.tfvars
 
-# 2. Fill in your values
+# 3. Fill in your values
 #    - Your IP: curl -s ifconfig.me
 #    - NVIDIA API key from build.nvidia.com (starts with nvapi-)
 nano terraform.tfvars
 
-# 3. Deploy
+# 4. Deploy
 terraform init
 terraform plan
 terraform apply

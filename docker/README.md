@@ -39,11 +39,11 @@ Containerized OpenClaw AI Agent for local development on macOS or Linux. Runs th
 ## Quick Start
 
 ```bash
-# 1. First-time setup
-make setup
+# 1. Create your local .env from the example (gitignored — never committed)
+cp .env.example .env
 
-# 2. Add your Anthropic API key
-nano .env    # set ANTHROPIC_API_KEY=sk-ant-...
+# 2. Fill in your credentials
+nano .env    # set ANTHROPIC_API_KEY or AWS credentials + OPENCLAW_GATEWAY_TOKEN
 
 # 3. Launch
 make up
@@ -54,6 +54,8 @@ open http://localhost:18789
 # 5. Get your gateway token (if auto-generated)
 make token
 ```
+
+> **Note**: `make setup` also handles step 1 automatically on first-time setup.
 
 ## Makefile Commands
 

@@ -46,22 +46,26 @@ Self-hosted OpenClaw AI Agent on AWS EC2 with Terraform. Full IaaS approach — 
 # 1. Navigate to this directory
 cd aws
 
-# 2. Edit terraform.tfvars — fill in your IP and generate a gateway token
+# 2. Create your local config from the example (gitignored — never committed)
+cp terraform.tfvars.example terraform.tfvars
+
+# 3. Fill in your values
 #    Find your IP:
 curl -s ifconfig.me
-
-#    Generate a strong token:
+#    Generate a strong gateway token:
 openssl rand -hex 32
+#    Then edit:
+nano terraform.tfvars
 
-# 3. Deploy
+# 5. Deploy
 terraform init
 terraform plan
 terraform apply
 
-# 4. Connect via SSH tunnel (secure — recommended)
+# 6. Connect via SSH tunnel (secure — recommended)
 eval $(terraform output -raw ssh_tunnel_command)
 
-# 5. Open dashboard in your browser
+# 7. Open dashboard in your browser
 open http://127.0.0.1:18789
 ```
 
