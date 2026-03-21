@@ -175,7 +175,7 @@ echo "  Config:   $(ls -la ~/.openclaw/openclaw.json 2>/dev/null || echo 'NOT FO
 echo "  Service:  $(systemctl is-active openclaw.service 2>/dev/null || echo 'UNKNOWN')"
 echo ""
 echo "Network:"
-echo "  Gateway:  $(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18789/ 2>/dev/null || echo 'NOT RESPONDING')"
+echo "  Gateway:  $(curl -s -o /dev/null -w '%%{http_code}' http://127.0.0.1:18789/ 2>/dev/null || echo 'NOT RESPONDING')"
 echo ""
 echo "AWS:"
 echo "  Region:   $(curl -s http://169.254.169.254/latest/meta-data/placement/region 2>/dev/null || echo 'UNKNOWN')"

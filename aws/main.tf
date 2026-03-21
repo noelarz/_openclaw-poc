@@ -111,7 +111,7 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_security_group" "openclaw" {
   name_prefix = "${var.project_name}-sg-"
-  description = "OpenClaw POC — SSH + Dashboard access restricted to operator IP"
+  description = "OpenClaw POC - SSH + Dashboard access restricted to operator IP"
   vpc_id      = aws_vpc.openclaw.id
 
   # SSH
