@@ -5,7 +5,7 @@
 
 aws_region   = "us-east-1"
 project_name = "nemoclaw-poc"
-owner_tag    = "noel"
+owner_tag    = "NaaS"
 
 # IMPORTANT: Replace with YOUR public IP. Find it: curl -s ifconfig.me
 allowed_cidrs = ["YOUR_PUBLIC_IP/32"]

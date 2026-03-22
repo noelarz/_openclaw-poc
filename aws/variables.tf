@@ -17,7 +17,7 @@ variable "project_name" {
 variable "owner_tag" {
   description = "Owner tag for resource identification"
   type        = string
-  default     = "noel"
+  default     = "NaaS"
 }
 
 # ---------------------------------------------------------------------------
